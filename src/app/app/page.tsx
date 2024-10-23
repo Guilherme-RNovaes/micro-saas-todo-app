@@ -1,10 +1,13 @@
-import { getSession } from "next-auth/react"
+import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import UserInfo from "./_components/user-info"
-import { auth } from "../api/auth/[...nextauth]/route"
 
 export default async function Page() {
-  const session = await getSession(auth)
+  const session = await auth()
+
+  if (!session) return (
+    redirect('/auth')
+  )
 
   return (
     <main className="flex items-center justify-center h-screen">

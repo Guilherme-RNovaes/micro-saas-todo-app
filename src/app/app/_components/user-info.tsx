@@ -10,14 +10,18 @@ type props = {
 }
 
 export default function UserInfo({ user }: props) {
-  if (!user) return
+  if (!user) return (
+    <Button variant='outline' onClick={() => signOut(user)}>
+      SignOut
+    </Button>
+  )
 
   return (
     <div className="flex flex-col items-center justify-center space-y-4">
       <Avatar>
         <AvatarFallback>G</AvatarFallback>
       </Avatar>
-      <span>{user.email}</span>
+      <span>{user?.email}</span>
 
       <Button variant='outline' onClick={() => signOut()}>
         SignOut

@@ -19,7 +19,7 @@ export function AuthForm() {
 
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
-      const result = await signIn('email', { email: data.email, redirect: false });
+      const result = await signIn('Nodemailer', { redirect: false });
       console.log(result); // Verifique o resultado aqui
 
       if (result?.error) {

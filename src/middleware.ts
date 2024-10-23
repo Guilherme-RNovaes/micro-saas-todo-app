@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUrl } from "./lib/get-url";
-import { getToken } from "next-auth/jwt";
 
-export default function middleware(request: NextRequest, req: any) {
-  const token = getToken({ req })
+export default function middleware(request: NextRequest) {
+  const token = request.cookies.get('next-auth.session-token')
   const pathname = request.nextUrl.pathname
 
   console.log({
-    token: token,
+    token: token?.value,
     pathname,
     cookies: request.cookies,
   })
-
+  if (pathname === '/auth' && token) {
+    return NextResponse.redirect(new URL(getUrl('/app')))
+  }
 
   if (pathname.includes('/app') && !token) {
     return NextResponse.redirect(new URL(getUrl('/auth')))
